@@ -2,3 +2,81 @@
 
 
 ---
+Create a reusable React functional component named SupplierPerformance for an ERP supplier management dashboard.
+
+The component should display supplier performance metrics in a clean, responsive table or card-based layout.
+
+The component must accept supplier data through props using this structure:
+
+<SupplierPerformance suppliers={suppliers} />
+
+The suppliers prop is an array of objects with the following structure:
+
+[
+  {
+    supplierId: "SUP-001",
+    supplierName: "ABC Supplies",
+    onTimeDeliveryPercentage: 96,
+    averageResponseTimeHours: 12
+  },
+  {
+    supplierId: "SUP-002",
+    supplierName: "XYZ Manufacturing",
+    onTimeDeliveryPercentage: 78,
+    averageResponseTimeHours: 36
+  }
+]
+
+Each supplier object contains:
+
+- supplierId: unique supplier identifier
+- supplierName: supplier's display name
+- onTimeDeliveryPercentage: percentage of purchase orders delivered on time
+- averageResponseTimeHours: average number of hours the supplier takes to respond to purchase orders
+
+For each supplier, display:
+
+1. Supplier name
+2. On-time delivery percentage
+3. Average response time in hours
+4. Overall performance status
+
+Use these rules to determine the overall status:
+
+GREEN:
+- onTimeDeliveryPercentage >= 90
+AND
+- averageResponseTimeHours <= 24
+
+YELLOW:
+- The supplier does not meet the GREEN criteria
+- AND either onTimeDeliveryPercentage >= 75 OR averageResponseTimeHours <= 48
+
+RED:
+- onTimeDeliveryPercentage < 75
+AND
+- averageResponseTimeHours > 48
+
+Display the status using clear visual color coding:
+
+- GREEN: green badge
+- YELLOW: yellow/orange badge
+- RED: red badge
+
+Component requirements:
+
+- Use a functional React component.
+- Accept suppliers through props instead of hard-coding data.
+- Render suppliers dynamically using map().
+- Use supplierId as the React key.
+- Format on-time delivery as a percentage.
+- Display response time in hours.
+- Handle an empty suppliers array with the message "No supplier performance data available."
+- Handle missing or invalid metric values gracefully.
+- Use semantic HTML.
+- Include accessible labels where appropriate.
+- Make the layout responsive for desktop and mobile.
+- Keep the component reusable and self-contained.
+- Do not use external libraries unless necessary.
+- Include any required React imports.
+- Return only the complete React component code.
