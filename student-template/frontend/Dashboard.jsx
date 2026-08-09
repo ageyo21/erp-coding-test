@@ -3,22 +3,61 @@ import React, { useState, useEffect } from 'react';
 const Dashboard = () => {
   const [inventoryData, setInventoryData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // TODO: Fetch data from '/api/inventory/alerts' inside this useEffect
   useEffect(() => {
-    // Implement fetch logic here
+    fetch('/api/inventory/alerts')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch inventory alerts');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setInventoryData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-  // TODO: If inventoryData is empty, return <p>All inventory levels are healthy.</p>
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
-  // TODO: Render a table with columns: Product Name, Quantity, Reorder Level
+  if (inventoryData.length === 0) {
+    return <p>All inventory levels are healthy.</p>;
+  }
+
   return (
     <div>
       <h2>Inventory Alerts</h2>
-      {/* Implement Table Here */}
-      <p>Table not implemented yet.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Reorder Level</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {inventoryData.map((item) => (
+            <tr key={item.id}>
+              <td>{item.product_name}</td>
+              <td>{item.quantity}</td>
+              <td>{item.reorder_level}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
